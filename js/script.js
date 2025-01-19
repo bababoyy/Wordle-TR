@@ -52,8 +52,24 @@ var wordList = getWordList();
 //function to get a random word from /js/words.json using jquery and set it to var word
 function getRandomWord() {
     var word = window.wordList;
+    let p = new URLSearchParams(location.search)
+    let i = p.get('i');
+    let pi = parseInt(i);
+    if (!word[pi]) {
+        let kelime;
+        while (kelime === undefined) {
+            let kp = prompt('Paylaşmak istediğin kelimeyi yaz');
+            let ip = word.indexOf(kp);
+            alert(ip)
+            if (ip !== -1) kelime = word[i];
+            p.set('i', ip)
+            alert('Yeniden açılacak sayfayı paylaştığında çıkacak kelime: ' + word[ip])
+            window.location.search = p.toString();
+        }
+        
+    }
     //make word lowercase
-    word = word[Math.floor(Math.random() * word.length)].toUpperCase();
+    word = word[pi || Math.floor(Math.random() * word.length)].toUpperCase();
     return word;
 }
 
@@ -256,32 +272,19 @@ function enter() {
                     typedWord = '';
                     window.tries += 1;
 
-                    if(tries < 6){
-                        jSuites.notification({
-                            name: 'AsaF',
-                            message: 'Yanlış tahmin!',
-                        })
-                    }
-
                 }
                 if (tries > 5) {
                     let cevap = 'Kaybettin, ' +'cevap '+ window.wordOfTheSession + ' olacaktı!';
                     jSuites.notification({
-                        name: 'AsaF',
                         message: cevap,
                     })
                     
                     gameOver = true;
 
-                    setTimeout(() => {
-                        location.reload();
-                    }, 6000);
-
                 }
                 console.log(window.dictionary);
             } else {
                 jSuites.notification({
-                    name: 'AsaF',
                     message: 'Böyle bir kelime yok!',
                 })
                 $('.game-tile').eq(0 + (tries * 5)).addClass('shake');
