@@ -61,7 +61,7 @@ function getRandomWord() {
             let kp = prompt('Paylaşmak istediğin kelimeyi yaz');
             let ip = word.indexOf(kp);
             alert(ip)
-            if (ip !== -1) kelime = word[i];
+            if (ip !== -1) kelime = word[ip];
             p.set('i', ip)
             alert('Yeniden açılacak sayfayı paylaştığında çıkacak kelime: ' + word[ip])
             window.location.search = p.toString();
